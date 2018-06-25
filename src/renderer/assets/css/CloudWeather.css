@@ -1,0 +1,388 @@
+body{
+    -moz-user-select:none;
+    -webkit-user-select:none;
+    -ms-user-select:none;
+    -khtml-user-select:none;
+    user-select:none;
+}
+@charset "utf-8";
+
+[class^="sf-icon-"],[class*=" sf-icon-"]{
+    display: inline-block;
+    font: normal normal normal 14px/1 slimf-icon,Microsoft YaHei;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin:0;
+    list-style: none;
+    overflow: hidden;
+    font-family:Microsoft YaHei,slimf-icon;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+:focus,:active{
+    outline:0;
+}
+body,html {
+    height:100%;
+    font-size:14px;
+    -webkit-text-size-adjust:100%;
+    -ms-text-size-adjust:100%;
+}
+a,a:hover,a:link,a:visited,button,button:focus,button:hover,i,i:hover,img,img:hover,input,input:focus,input:hover,select:focus,span,span:hover,textarea:focus {
+    -webkit-transition:all .35s;
+    -moz-transition:all .35s;
+    -o-transition:all .35s;
+}
+a:hover,a:link,a:visited {
+    text-decoration:none;
+}
+button:hover {
+    opacity: .8;
+    cursor:pointer;
+}
+[ripple],button{
+    position: relative;
+    transform: translate3d(0,0,0);
+}
+[ripple]:after,button:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #666 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform .3s, opacity .5s;
+}
+[ripple]:active:after,button:active:after {
+    transform: scale(0, 0);
+    opacity: .3;
+    transition: 0s;
+}
+input:-webkit-autofill{
+    -webkit-box-shadow: 0 0 0 400px #fff inset!important;
+    -webkit-text-fill-color: #666666!important;
+}
+button,input,select,textarea {
+    border: none;
+    outline:0;
+    -webkit-transition:all .35s;
+    -moz-transition:all .35s;
+    -o-transition:all .35s;
+}
+input[type="radio"],input[type="checkbox"]{
+    display: none;
+}
+audio,canvas,progress,video {
+    display:inline-block;
+    vertical-align:baseline;
+}
+pre {
+    display:block;
+    padding:10px;
+    color:#333;
+    word-wrap:break-word;
+    font-size:13px;
+    line-height:1.42857143;
+    word-break:break-all;
+    float: left;
+}
+pre code {
+    padding:0;
+    border-radius:0;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    background-color:transparent;
+    color:inherit;
+    white-space:pre-wrap;
+    font-size:inherit;
+}
+label {
+    display:inline-block;
+    max-width:100%;
+}
+output {
+    display:block;
+    padding-top:7px;
+    color:#555;
+    font-size:14px;
+    line-height:1.42857143;
+}
+textarea {
+    resize: none;
+}
+iframe{
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+option {
+    font-weight: normal;
+    display: block;
+    white-space: pre;
+    min-height: 30px;
+}
+#CustomFunc0>.windowTitle p{
+    display: none;
+}
+.CloudWeather {
+    width: 100%;
+    height: 100%;
+    background: #1f8cda;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+}
+.CloudWeatherLoading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: #1f8cda;
+}
+.CWeacherCenter {
+    margin: 0px auto;
+    text-align: center;
+}
+.CWeacherCenter img{
+    width: 100px;
+    height: 100px;
+}
+.CloudWeatherHead {
+    height: 35px;
+    line-height: 35px;
+    padding-left: 50px;
+}
+.CloudWeatherHead img{
+    float: left;
+    width: 39px;
+    position: absolute;
+    top: 10px;
+    z-index: 1;
+    left: 10px;
+}
+.CloudWeatherHead div{
+    position: absolute;
+    top: 12px;
+}
+.CWeatherCity {
+    float: left;
+    display: block;
+    height: 40px;
+    color: #fff;
+    text-indent: 10px;
+}
+.CloudWeatherHead div button {
+    width: 60px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    background: none;
+    cursor: pointer;
+    height: 30px;
+}
+.CloudWeatherMain {
+    padding: 2%;
+    width: 100%;
+    height: calc(100% - 35px);
+    padding-bottom: 0;
+}
+.CWeatherToday {
+    float: left;
+    width: 23%;
+    height: 100%;
+}
+.CWeatherToday * {
+    -webkit-transition: all 350ms;
+    -moz-transition: all 350ms;
+    -o-transition: all 350ms;
+}
+.CWeatherToday img{
+    width: 120px;
+    height: 120px;
+}
+.CWeatherToday p {
+    color: #fff;
+    text-align: center;
+    font-size: 30px;
+}
+.CWeatherToday ul {
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+}
+.CWeatherToday ul>li {
+    height: 35px;
+    line-height: 35px;
+}
+.CWeatherToday canvas{
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+    margin-top: -15px;
+}
+#CWeatherTread {
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeInUp;
+    animation-name: fadeInUp;
+}
+.CWeatherLast {
+    float: left;
+    width: 77%;
+    height: 100%;
+}
+.CWeatherList {
+    width: 100%;
+}
+.CWeatherList li {
+    float: left;
+    margin: 0 2%;
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}
+.CWeatherList li>p {
+    margin-top: 5px;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+}
+.CWeatherNumber {
+    float: right;
+    width: 258px;
+    height: 233px;
+    overflow-y: auto;
+}
+.CWeatherNumberCon{
+    width: 100%;
+    color: #fff;
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}
+.CWeatherNumberCon p{
+    height: 35px;
+    line-height: 35px;
+    padding: 0 10px;
+}
+.CWeatherNumberCon p:hover{
+    cursor: pointer;
+    background: rgba(255,255,255,0.15);
+}
+.CWeatherNumberCon span{
+    float: right;
+    height: 35px;
+    line-height: 35px;
+    font-size: 20px;
+}
+.CWeatherNumberCon span>span{
+    float: left;
+    padding-right: 10px;
+    font-size: 14px;
+}
+.CWeatherNumberTips{
+    width: 100%;
+    padding: 0px 10px;
+    color: #fff;
+    display: none;
+}
+.line-scale-pulse-out-rapid {
+    margin: 25% auto;
+    width: 100%;
+    text-align: center;
+}
+.line-scale-pulse-out-rapid > div {
+    display: inline-block;
+    margin: 2px;
+    width: 4px;
+    height: 35px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    background-color: #fff;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation: line-scale-pulse-out-rapid 0.9s 0s infinite cubic-bezier(.11, .49, .38, .78);
+    animation: line-scale-pulse-out-rapid 0.9s 0s infinite cubic-bezier(.11, .49, .38, .78);
+}
+.line-scale-pulse-out-rapid > div:nth-child(2), .line-scale-pulse-out-rapid > div:nth-child(4) {
+    -webkit-animation-delay: 0.25s !important;
+    animation-delay: 0.25s !important;
+}
+.line-scale-pulse-out-rapid > div:nth-child(1), .line-scale-pulse-out-rapid > div:nth-child(5) {
+    -webkit-animation-delay: 0.5s !important;
+    animation-delay: 0.5s !important;
+}
+@-webkit-keyframes line-scale-pulse-out-rapid {
+    0% {
+        -webkit-transform: scaley(1);
+        transform: scaley(1);
+    }
+
+    80% {
+        -webkit-transform: scaley(0.3);
+        transform: scaley(0.3);
+    }
+
+    90% {
+        -webkit-transform: scaley(1);
+        transform: scaley(1);
+    }
+}
+@keyframes line-scale-pulse-out-rapid {
+    0% {
+        -webkit-transform: scaley(1);
+        transform: scaley(1);
+    }
+
+    80% {
+        -webkit-transform: scaley(0.3);
+        transform: scaley(0.3);
+    }
+
+    90% {
+        -webkit-transform: scaley(1);
+        transform: scaley(1);
+    }
+}
+@keyframes dayshow {
+    0% {
+        transform: translate(0, 100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}

@@ -6,6 +6,7 @@
         <span class="title">
           Welcome to your new project!
         </span>
+        <webview src="file://~@assets/1.html"></webview>
         <system-information></system-information>
       </div>
 
@@ -45,6 +46,5 @@
 
 <style>
   @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
-  @import url("../assets/1.css");
 
 </style>

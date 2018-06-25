@@ -8,20 +8,25 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
-let mainWindow
+let mainWindow;
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
+app.commandLine.appendSwitch('--args --disable-web-security');
 
 function createWindow () {
   /**
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
-    useContentSize: true,
-    width: 1000
+      height: 600,
+      useContentSize: true,
+      width: 1100,
+      webPreferences:{
+          webSecurity:true
+    }
   });
+  mainWindow.webContents.disableDeviceEmulation();
   mainWindow.setMenu(null);
   mainWindow.webContents.openDevTools();
   mainWindow.loadURL(winURL);
@@ -36,7 +41,7 @@ app.on('ready', createWindow);
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
-  };=
+  }
 });
 
 app.on('activate', () => {
