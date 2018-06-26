@@ -9,6 +9,7 @@
     url('../font/slimf-icon.svg?66309867#slimf-icon') format('svg');
     font-weight: normal;
     font-style: normal;
+    -webkit-app-region:no-drag;
 }
 [class^="sf-icon-"],[class*=" sf-icon-"]{
     display: inline-block;
@@ -26,7 +27,8 @@
     overflow: hidden;
     font-family:Microsoft YaHei,slimf-icon;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-app-region:no-drag;
 }
 :focus,:active{
     outline:0;
@@ -36,6 +38,8 @@ body,html {
     font-size:14px;
     -webkit-text-size-adjust:100%;
     -ms-text-size-adjust:100%;
+    padding: 0!important;
+    margin: 0!important;
 }
 a,a:hover,a:link,a:visited,button,button:focus,button:hover,i,i:hover,img,img:hover,input,input:focus,input:hover,select:focus,span,span:hover,textarea:focus {
     -webkit-transition:all .35s;

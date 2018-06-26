@@ -32,7 +32,6 @@ function createWindow () {
   });
   mainWindow.webContents.disableDeviceEmulation();
   mainWindow.setMenu(null);
-  mainWindow.webContents.openDevTools();
   mainWindow.loadURL(winURL);
 
   mainWindow.on('closed', () => {

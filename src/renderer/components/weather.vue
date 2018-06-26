@@ -13,11 +13,11 @@
             <img draggable="false" src="../../../static/img/bar/weather.png">
             <div>
                 <p class="CWeatherCity">当前城市：{{city}}</p>
-                <button @click="alert(123)">[更换]</button>
+                <button @click="weatherBox">[更换]</button>
             </div>
             <section style="-webkit-app-region: no-drag">
                 <button type="button" class="sf-icon-window-minimize" @click="mini"></button>
-                <button type="button" class="sf-icon-times" @click='close' style="font-size:14px"></button>
+                <button type="button" class="sf-icon-times" @click='close' style="font-size:16px"></button>
             </section>
         </div>
         <div class="CloudWeatherMain">
@@ -55,30 +55,7 @@
         name: "weather",
         components: { list,tips },
         created: function() {
-            this.$http({
-                method: 'POST',
-                params: { 'city': '深圳' },
-                emulateJSON:true,
-                url: 'http://cloud.com:100/service/WeatherInfo',
-            }).then((response) => {
-                let data=response.data.results[0].weather_data;
-                let tipsData=response.data.results[0].index;
-                data.forEach(function (list) {
-                    list.dayPictureUrl='static/img/weather/'+list.dayPictureUrl.split('/')[5]+'/'+list.dayPictureUrl.split('/')[6];
-                });
-                tipsData.forEach(function (list) {
-                    list.show=false
-                });
-                this.lists=data;
-                this.tipData=tipsData;
-                this.temperate=data[0].date.slice(data[0].date.lastIndexOf('(') + 4, data[0].date.lastIndexOf(')')-1) + '°';
-                this.city=response.data.results[0].currentCity;
-                this.ShowPm25(response.data.results[0].pm25);
-                this.ShowTread(response.data.results[0]);
-                this.finish = true
-            },function (error) {
-                console.log(2)
-            });
+            this.load(localStorage.city)
         },
         data(){
             return {
@@ -90,7 +67,38 @@
                 showPage:0
             };
         },
+        mounted:function () {
+
+        },
         methods: {
+            load(city){
+                this.$http({
+                    /*method: 'GET',
+                    params: { 'city': city?city:'深圳' },*/
+                    //emulateJSON:true,
+                    url: 'http://api.map.baidu.com/telematics/v3/weather?location='+(city?city:'深圳')+'&output=json&ak=v4Wf3i6LQtNU0CvL3fScxzIx'
+
+                }).then((response) => {
+                    let data=response.data.results[0].weather_data;
+                    let tipsData=response.data.results[0].index;
+                    data.forEach(function (list) {
+                        list.dayPictureUrl='static/img/weather/'+list.dayPictureUrl.split('/')[5]+'/'+list.nightPictureUrl.split('/')[6];
+                    });
+                    tipsData.forEach(function (list) {
+                        list.show=false
+                    });
+                    this.lists=data;
+                    this.tipData=tipsData;
+                    this.temperate=data[0].date.slice(data[0].date.lastIndexOf('(') + 4, data[0].date.lastIndexOf(')')-1) + '°';
+                    this.city=response.data.results[0].currentCity;
+                    this.ShowPm25(response.data.results[0].pm25);
+                    this.ShowTread(response.data.results[0]);
+                    this.finish = true;
+                    localStorage.city=this.city;
+                },function (error) {
+
+                });
+            },
             $(elm){
                 return document.querySelectorAll(elm);
             },
@@ -373,6 +381,25 @@
                     }
                 }
                 return date;
+            },
+            weatherBox(){
+                this.$prompt('请输入城市', '切换城市', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    inputErrorMessage: '请输入城市',
+                    inputValue:this.city
+                }).then(({ value }) => {
+                    this.$message({
+                        type: 'success',
+                        message: '你的城市是: ' + value
+                    });
+                    this.load(value)
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '取消输入'
+                    });
+                });
             },
             mini(){
                 ipc.send('mini');

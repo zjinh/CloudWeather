@@ -146,7 +146,6 @@ option {
     -ms-user-select: none;
     -khtml-user-select: none;
     user-select: none;
-    -webkit-app-region: drag;
 }
 .CloudWeatherLoading {
     position: absolute;
@@ -169,6 +168,7 @@ option {
     height: 60px;
     line-height: 35px;
     padding-left: 50px;
+    -webkit-app-region: drag!important;
 }
 .CloudWeatherHead img{
     float: left;
@@ -297,6 +297,7 @@ option {
     width: 258px;
     height: 233px;
     overflow-y: auto;
+    -webkit-app-region:no-drag;
 }
 .CWeatherNumberCon{
     width: 100%;
