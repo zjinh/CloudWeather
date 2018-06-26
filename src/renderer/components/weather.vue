@@ -1,35 +1,46 @@
 <template>
     <div class="CloudWeather">
-        <div class="CloudWeatherHead">
-            <img draggable="false">
-            <div>
-                <p class="CWeatherCity"></p>
-                <button tooltip="更换城市">[更换]</button>
+        <div class="CloudWeatherLoading" v-show="!finish">
+            <div class="line-scale-pulse-out-rapid">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
+        </div>
+        <div class="CloudWeatherHead">
+            <img draggable="false" src="../../../static/img/bar/weather.png">
+            <div>
+                <p class="CWeatherCity">当前城市：{{city}}</p>
+                <button @click="alert(123)">[更换]</button>
+            </div>
+            <section style="-webkit-app-region: no-drag">
+                <button type="button" class="sf-icon-window-minimize" @click="mini"></button>
+                <button type="button" class="sf-icon-times" @click='close' style="font-size:14px"></button>
+            </section>
         </div>
         <div class="CloudWeatherMain">
             <div class="CWeatherToday">
-                <div class="CWeacherCenter">
-                    <img id="CWeatherTImg" draggable="false" src="../../../static/img/weather/day/qing.png">
+                <div class="CWeacherCenter" v-if="finish">
+                    <img draggable="false" :src="lists[0].dayPictureUrl">
                 </div>
                 <p id="CWeatherTInfo">
+                    {{temperate}}
                 </p>
-                <ul id="CWeatherTtemperature">
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                <ul id="CWeatherTtemperature" v-if="finish">
+                    <li>{{lists[0].temperature}}</li>
+                    <li>{{lists[0].weather}}</li>
+                    <li>{{lists[0].wind}}</li>
                 </ul>
                 <div class="CWeacherCenter">
                     <canvas width="250" height="260" id="CWeatherPM">浏览器不支持canvas</canvas>
                 </div>
             </div>
-            <router-view>
-
-            </router-view>
             <div class="CWeatherLast">
-                <list v-if="testtest" v-bind:tabse="lists"></list>
+                <list v-if="finish" v-bind:tabse="lists"></list>
                 <canvas id="CWeatherTread" width="550" height="233"></canvas>
-                <tips v-if="testtest" v-bind:tabes="tipData"></tips>
+                <tips v-if="finish" v-bind:tabes="tipData"></tips>
             </div>
         </div>
     </div>
@@ -38,11 +49,12 @@
 <script>
     import list from './weather/list'
     import tips from './weather/tips'
+    const {ipcRenderer} = require('electron');
+    let ipc=require('electron').ipcRenderer;
     export default {
         name: "weather",
         components: { list,tips },
         created: function() {
-            let _this=this;
             this.$http({
                 method: 'POST',
                 params: { 'city': '深圳' },
@@ -59,9 +71,11 @@
                 });
                 this.lists=data;
                 this.tipData=tipsData;
+                this.temperate=data[0].date.slice(data[0].date.lastIndexOf('(') + 4, data[0].date.lastIndexOf(')')-1) + '°';
+                this.city=response.data.results[0].currentCity;
                 this.ShowPm25(response.data.results[0].pm25);
                 this.ShowTread(response.data.results[0]);
-                this.testtest = true
+                this.finish = true
             },function (error) {
                 console.log(2)
             });
@@ -70,7 +84,9 @@
             return {
                 lists:[],
                 tipData:[],
-                testtest: false,
+                finish: false,
+                city:'深圳',
+                temperate:0,
                 showPage:0
             };
         },
@@ -79,8 +95,8 @@
                 return document.querySelectorAll(elm);
             },
             ShowPm25(pm25){
-                var canvas =this.$("#CWeatherPM")[0];
-                var box = {
+                let canvas =this.$("#CWeatherPM")[0];
+                let box = {
                         width: canvas.width,
                         height: canvas.height
                     }, radius = 100,
@@ -90,7 +106,7 @@
                     increment = 0,
                     strokeStyle,
                     imageData;
-                var ctx = canvas.getContext('2d');
+                let ctx = canvas.getContext('2d');
                 function animation() {
                     ctx.putImageData(imageData, 0, 0);
                     ctx.save();
@@ -204,7 +220,7 @@
                     finish = beginAngle + 6 * Math.PI * 2 / 7 + (pm25 - 500) / 500 * Math.PI * 2 / 7;
                 }
                 imageData = ctx.getImageData(0, 0, box.width, box.height);
-                var that = this;
+                let that = this;
                 setTimeout(function () {
                     window.requestAnimationFrame(animation);
                 }, 400);
@@ -212,16 +228,16 @@
                 ctx.restore();
             },
             ShowTread(data){
-                var dateData = this.CWeatherCandler(new Date().getFullYear()+'-'+new Date().getMonth()+1+'-'+new Date().getDay());
-                var trendData = [], // 趋势数据
+                let dateData = this.CWeatherCandler(new Date().getFullYear()+'-'+new Date().getMonth()+1+'-'+new Date().getDay());
+                let trendData = [], // 趋势数据
                     weather = [],
                     weekData = [],
                     trendText,
                     weatherText;
-                for (i = 0, len = data.weather_data.length; i < len; i++) { // 更新天气详情
+                for (let i = 0, len = data.weather_data.length; i < len; i++) { // 更新天气详情
                     weekData[i] = data.weather_data[i].date.slice(0, 2);
                 }
-                for (i = 0, len = data.weather_data.length; i < len; i++) {
+                for (let i = 0, len = data.weather_data.length; i < len; i++) {
                     trendText = data.weather_data[i].temperature;
                     weatherText = data.weather_data[i].weather;
                     trendData[i] = [];
@@ -233,7 +249,7 @@
                         trendData[i][0] = realtext.slice(0, realtext.length - 1);
                         trendData[i][1] = trendText.slice(0, trendText.length - 1);
                         if (trendData[i][0]*1 < trendData[i][1]*1) {
-                            var temp = trendData[i][0];
+                            let temp = trendData[i][0];
                             trendData[i][0] = trendData[i][1];
                             trendData[i][1] = temp;
                         }
@@ -252,7 +268,7 @@
                 trendData.push(weather);
                 trendData.push(dateData);
                 trendData.push(weekData);
-                var canvas = this.$("#CWeatherTread")[0],
+                let canvas = this.$("#CWeatherTread")[0],
                     ctx = canvas.getContext('2d'),
                     box = {
                         width: canvas.width,
@@ -267,7 +283,7 @@
                     date,
                     week,
                     len = trendData.length;
-                for (var i = 0; i < 4; i++) {
+                for (let i = 0; i < 4; i++) {
                     if (Number(trendData[i][0]) > max) {
                         max = Number(trendData[i][0]);
                     }
@@ -292,7 +308,7 @@
                 ctx.fillStyle = '#fff';
                 ctx.lineWidth = 1;
                 ctx.textAlign = "center";
-                for (i = 1; i <= 4; i++) {
+                for (let i = 1; i <= 4; i++) {
                     date = trendData[len - 2][i - 1];
                     week = trendData[len - 1][i - 1];
                     ctx.beginPath();
@@ -304,7 +320,7 @@
                 ctx.lineWidth = 2;
                 ctx.textAlign = "center";
                 ctx.font = "normal 16px Microsoft YaHei";
-                for (i = 0; i < len - 3; i++) {
+                for (let i = 0; i < len - 3; i++) {
                     ctx.beginPath();
                     ctx.strokeStyle = '#fff';
                     ctx.fillStyle = '#fff';
@@ -329,19 +345,19 @@
                 ctx.restore();
             },
             CWeatherCandler(dateString) {
-                var date = [],
+                let date = [],
                     nonleap = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
                     leap = [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
                     year, month, theDate;
                 year = dateString.slice(0, dateString.indexOf('-'));
                 month = dateString.slice(dateString.indexOf('-') + 1, dateString.lastIndexOf('-'));
                 theDate = dateString.slice(dateString.lastIndexOf('-') + 1);
-                if (year%400 === 0||year%4===0&&year%100!=0) {
+                if (year%400 === 0||year%4===0&&year%100!==0) {
                     var monthNum = leap[Number(month)];
                 } else {
                     var monthNum = nonleap[Number(month)];
                 }
-                for (var i = 0; i < 4; i++) {
+                for (let i = 0; i < 4; i++) {
                     date[i] = [];
                     date[i][0] = Number(month);
                     date[i][1] = theDate++;
@@ -357,23 +373,18 @@
                     }
                 }
                 return date;
+            },
+            mini(){
+                ipc.send('mini');
+            },
+            close(){
+                ipc.send('close');
             }
         },
     }
 </script>
 
 <style scoped>
-    @font-face {
-        font-family: 'slimf-icon';
-        src: url('../assets/font/slimf-icon.eot?66309867');
-        src: url('../assets/font/slimf-icon.eot?66309867#iefix') format('embedded-opentype'),
-        url('../assets/font/slimf-icon.woff2?66309867') format('woff2'),
-        url('../assets/font/slimf-icon.woff?66309867') format('woff'),
-        url('../assets/font/slimf-icon.ttf?66309867') format('truetype'),
-        url('../assets/font/slimf-icon.svg?66309867#slimf-icon') format('svg');
-        font-weight: normal;
-        font-style: normal;
-    }
-    @import url("../assets/css/CloudWeather.css");
-
+    @import url("../../../static/css/Slimf.css");
+    @import url("../../../static/css/CloudWeather.css");
 </style>

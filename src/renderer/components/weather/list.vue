@@ -1,13 +1,13 @@
 <template>
     <ul class="CWeatherList">
-        <li v-for="index in tabse">
+        <li v-for="(item, index) in tabse" :style="{animationDelay:'0.'+index+2+'s'}">
             <div class="CWeacherCenter">
-                <img draggable="false" :src="index.dayPictureUrl">
+                <img draggable="false" :src="item.dayPictureUrl">
             </div>
-            <p>{{index.date}}</p>
-            <p>{{index.temperature}}</p>
-            <p>{{index.weather}}</p>
-            <p>{{index.wind}}</p>
+            <p>{{item.date}}</p>
+            <p>{{item.temperature}}</p>
+            <p>{{item.weather}}</p>
+            <p>{{item.wind}}</p>
         </li>
     </ul>
 </template>
@@ -20,7 +20,6 @@
             }
         },
         mounted(){
-            debugger
         }
     }
 </script>

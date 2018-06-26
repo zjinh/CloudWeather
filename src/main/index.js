@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow,ipcMain,ipcRenderer } from 'electron'
 
 /**
  * Set `__static` path to static files in production
@@ -22,6 +22,10 @@ function createWindow () {
       height: 600,
       useContentSize: true,
       width: 1100,
+      frame:false,
+      maximizable:false,
+      resizable:false,
+      backgroundColor:'#1f8cda',
       webPreferences:{
           webSecurity:true
     }
@@ -35,8 +39,18 @@ function createWindow () {
     mainWindow = null
   })
 }
-
-app.on('ready', createWindow);
+function BindIpc(){
+    ipcMain.on('mini', function () {
+        mainWindow.minimize();
+    });
+    ipcMain.on('close', function () {
+        app.quit()
+    });
+}
+app.on('ready', function (){
+    BindIpc();
+    createWindow();
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

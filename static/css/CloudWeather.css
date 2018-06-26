@@ -146,6 +146,7 @@ option {
     -ms-user-select: none;
     -khtml-user-select: none;
     user-select: none;
+    -webkit-app-region: drag;
 }
 .CloudWeatherLoading {
     position: absolute;
@@ -165,7 +166,7 @@ option {
     height: 100px;
 }
 .CloudWeatherHead {
-    height: 35px;
+    height: 60px;
     line-height: 35px;
     padding-left: 50px;
 }
@@ -180,6 +181,21 @@ option {
 .CloudWeatherHead div{
     position: absolute;
     top: 12px;
+}
+.CloudWeatherHead section{
+    float: right;
+}
+.CloudWeatherHead section button{
+    float: left;
+    width: 35px;
+    height: 30px;
+    color: #fff;
+    margin-left: 5px;
+    font-size: 12px;
+    background: none;
+}
+.CloudWeatherHead section button:hover{
+    background: rgba(255,255,255,0.2);
 }
 .CWeatherCity {
     float: left;
@@ -196,6 +212,7 @@ option {
     background: none;
     cursor: pointer;
     height: 30px;
+    -webkit-app-region: no-drag;
 }
 .CloudWeatherMain {
     padding: 2%;
