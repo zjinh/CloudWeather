@@ -412,6 +412,5 @@
 </script>
 
 <style scoped>
-    @import url("../../../static/css/Slimf.css");
-    @import url("../../../static/css/CloudWeather.css");
+    @import url("../assets/css/weather.css");
 </style>

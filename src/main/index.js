@@ -1,84 +1,66 @@
-import { app, BrowserWindow,ipcMain,ipcRenderer } from 'electron'
-
-/**
- * Set `__static` path to static files in production
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
- */
+import { app, BrowserWindow,ipcMain } from 'electron'
+const path = require('path');
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
-
-let mainWindow;
+let version=require("../../package.json").version;
+let MainWindow;
 const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:9080`
-  : `file://${__dirname}/index.html`
-app.commandLine.appendSwitch('--args --disable-web-security');
+    ? `http://localhost:9080`
+    : `file://${__dirname}/index.html`;
 
 function createWindow () {
-  /**
-   * Initial window options
-   */
-  mainWindow = new BrowserWindow({
-      height: 600,
-      useContentSize: true,
-      width: 1100,
-      frame:false,
-      maximizable:false,
-      resizable:false,
-      backgroundColor:'#1f8cda',
-      webPreferences:{
-          webSecurity:true
+  MainWindow = new BrowserWindow({
+    height: 600,
+    width: 1100,
+    frame:false,
+    maximizable:false,
+    resizable:false,
+    backgroundColor:'#1f8cda',
+    webPreferences:{
+      nodeIntegration:true,
+      webSecurity:false
     }
   });
-  mainWindow.webContents.disableDeviceEmulation();
-  mainWindow.setMenu(null);
-  mainWindow.loadURL(winURL);
+  MainWindow.setMenu(null);
+  MainWindow.loadURL(winURL);
 
-  mainWindow.on('closed', () => {
-    mainWindow = null
+  MainWindow.on('closed', () => {
+    MainWindow = null
   })
 }
 function BindIpc(){
-    ipcMain.on('mini', function () {
-        mainWindow.minimize();
-    });
-    ipcMain.on('close', function () {
-        app.quit()
-    });
+  ipcMain.on('mini', function () {
+    MainWindow.minimize();
+  });
+  ipcMain.on('close', function () {
+    app.quit()
+  });
 }
-app.on('ready', function (){
+const gotTheLock = app.requestSingleInstanceLock();
+if (!gotTheLock) {
+  app.quit()
+} else {
+  app.on('second-instance', () => {
+    if (MainWindow) {
+      MainWindow.show();
+      MainWindow.restore();
+      MainWindow.focus()
+    }
+  });
+  app.on('ready', function (){
+    app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
     BindIpc();
     createWindow();
-});
-
+  });
+}
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
 });
-
 app.on('activate', () => {
-  if (mainWindow === null) {
+  if (MainWindow === null) {
     createWindow()
   }
 });
-
-/**
- * Auto Updater
- *
- * Uncomment the following code below and install `electron-updater` to
- * support auto updating. Code Signing with a valid certificate is required.
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
- */
-
-/*
-import { autoUpdater } from 'electron-updater'
-
-autoUpdater.on('update-downloaded', () => {
-  autoUpdater.quitAndInstall()
-})
-
-app.on('ready', () => {
-  if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
-})
- */
