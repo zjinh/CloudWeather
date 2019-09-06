@@ -19,12 +19,12 @@ C-Weather是一个天气查看工具。
 
 ### 克隆代码
 ```bash
-git clone https://github.com/zjinh/CloudDisk.git
+git clone https://github.com/zjinh/CloudWeather.git
 ```
 
 ### 安装依赖
 ```bash
-cd CloudDisk
+cd CloudWeather
 npm i
 ```
 ### 淘宝的npm源
