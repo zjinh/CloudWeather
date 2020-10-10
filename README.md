@@ -1,15 +1,18 @@
 # CloudWeather(C-Weather)
-
-> C-Weather
-## 🖥 应用界面
+> C-WEATHER
+## 🖥 应用界面（web）
 ![CloudWeather](screen/1.png)
+## 🖥 应用界面（electron）
+![CloudWeather](screen/2.png)
 
-## 第一个electron-vue项目
-C-Weather是一个天气查看工具。
+
+## 项目说明
+### 这个项目由Cloud使用命令分割生成，隶属于CloudWeb项目
+### 支持web和electron
+
 
 ## 🛠 使用的技术栈
 - [Electron](https://electronjs.org/)
-- [electron-vue](https://simulatedgreg.gitbooks.io/electron-vue/content/cn/) 
 - [electron-builder](https://www.electron.build/) 
 - [Vue](https://vuejs.org/)
 - [VueX](https://vuex.vuejs.org/)
@@ -32,13 +35,14 @@ npm i
 npm config set registry 'https://registry.npm.taobao.org'
 npm config set ELECTRON_MIRROR='https://npm.taobao.org/mirrors/electron/'
 ```
-或者使用[Yarn](https://yarnpkg.com/)安装依赖
 
 ### 运行项目
 ```bash
-npm run dev
+npm run dev:web
+npm run dev:electron
 ```
 ### 打包项目
 ```bash
-npm run build
+npm run build:web
+npm run build:electron
 ```

@@ -1,0 +1,10 @@
+{
+  "development": {
+    "url": "http://localhost:3000",
+    "updateUrl": "https://update.zjinh.cn"
+  },
+  "production": {
+    "url": "https://api.zjinh.cn",
+    "updateUrl": "https://update.zjinh.cn"
+  }
+}

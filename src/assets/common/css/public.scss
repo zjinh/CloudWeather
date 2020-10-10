@@ -1,0 +1,130 @@
+@import "slimf-icon.css";
+@import "animate.min.css";
+@font-face {
+  font-family: 'cloud-font';
+  src: url("../font/cloud-font.woff");
+}
+@font-face {
+  font-family: 'zk-font';
+  src: url("../font/zkgdh151105.ttf");
+}
+*{
+  font-family:  'cloud-font','微软雅黑', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:focus,:active{
+  outline:0;
+}
+button,input,select,textarea {
+  border: none;
+  -webkit-transition:all .35s;
+  -moz-transition:all .35s;
+  -o-transition:all .35s;
+  resize: none!important;
+}
+button[disabled]{
+  cursor: not-allowed;
+  opacity: .5;
+}
+[ripple],button{
+  position: relative;
+  transform: translate3d(0,0,0);
+  overflow: hidden!important;
+  cursor: pointer;
+}
+[ripple]:after,button:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #666 10%, #ffffff9e 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform .3s, opacity .5s;
+}
+[ripple]:active:after,button:active:after {
+  transform: scale(0, 0);
+  opacity: .3;
+}
+a,a:hover,a:link,a:visited,button,i,input,select,span,textarea{
+  transition:all .35s;
+}
+a:hover,a:link,a:visited {
+  text-decoration:none;
+}
+input:-webkit-autofill{
+  -webkit-box-shadow: 0 0 0 400px #fff inset!important;
+  -webkit-text-fill-color: #666666!important;
+}
+#app,body,html{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+  background: none!important;
+  background-color: transparent!important;
+}
+ul,li{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cloud-main{
+  width: 100%;
+  height: 100%;
+}
+.cloud-version {
+  display: none;
+}
+/*滚动条*/
+*::-webkit-scrollbar{
+  width:7px;
+  height:7px;
+  background:none;
+}
+*::-webkit-scrollbar-button{
+  display:none;
+}
+*::-webkit-scrollbar-track{
+  background:none;
+}
+*::-webkit-scrollbar-track-piece {
+  display:none;
+}
+*::-webkit-scrollbar-thumb{
+  background : #EAECF0;
+  position   : absolute;
+  width      : 3px;
+  right      : 0;
+  top        : 0;
+  bottom     : 0;
+  visibility : hidden\9; /* Target only IE7 and IE8 with this hack */
+  opacity    : .01;
+  -webkit-transition    : .2s;
+  -moz-transition       : .2s;
+  -o-transition         : .2s;
+  transition            : .2s;
+  -moz-border-radius    : 3px;
+  -webkit-border-radius : 3px;
+  border-radius         : 3px;
+}
+*::-webkit-scrollbar-thumb:active,*::-webkit-scrollbar-thumb:hover{
+  background : rgba(0,0,0,.50);
+}
+*::-webkit-scrollbar-corner {
+  display:none;
+}
+*::-webkit-scrollbar-resizer  {
+  display:none;
+}
+.v-modal{
+  opacity: 0!important;
+}
